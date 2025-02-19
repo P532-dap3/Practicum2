@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+      .card{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 20%;
+        border-radius: 5px;
+      }
+      .card:hover{
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      img{
+        border-radius: 5px 5px 0 0;
+      }
+
+      .container{
+        padding: 2px 16px;
+      }
+    </style>
+</head>
+<body>
+    <div id="ducks-container">
+
+    </div>
+</body>
+<script>
+  async function fetchDucks() {
+        try {
+            const response = await fetch('http://localhost:8080/ducks'); // Adjust API endpoint
+            const ducks = await response.json();
+
+            const container = document.getElementById('ducks-container');
+            container.innerHTML = ''; // Clear existing content
+
+            ducks.forEach(duck => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="http://localhost:8080/ducks/${duck.id}/image" alt="Avatar" style="width:100%">
+                    <div class="container">
+                        <h4><b>${duck.id}</b></h4>
+                        <p>${duck.type}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error('Error fetching ducks:', error);
+        }
+    }
+
+    fetchDucks();
+</script>
+</html>
