@@ -11,7 +11,4 @@ public class HomeController implements ErrorController {
     {
         return "Welcome to the ducks service!!";
     }
-
-
-
 }
